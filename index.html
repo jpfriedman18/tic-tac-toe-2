@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <title>Tic Tac Toe</title>
+    </head>
+    <body>
+      <h1>Tic-Tac-Toe</h1>
+
+      <div id='scoreboard'>
+        <p id='x-score'>X Wins: 0</p>
+        <p id='o-score'>O Wins: 0</p>
+        <p id='currentPlayer'>Current Player: X</p>
+      </div>
+
+      <div class='account'>
+        <div>Sign Up!</div>
+        <form>
+          <input name="credentials[email]" type="text" value="an@example.email">
+          <input name="credentials[password]" type="password" value="an example password">
+          <input type="submit">
+        </form>
+      </div>
+
+      <table id='board'>
+        <tr class='topRow'>
+          <td class='leftCol' id='1'></td>
+          <td class='middleCol' id='2'></td>
+          <td class='rightCol' id='3'></td>
+        </tr>
+        <tr class='middleRow'>
+          <td class='leftCol' id='4'></td>
+          <td class='middleCol' id='5'></td>
+          <td class='rightCol' id='6'></td>
+        </tr>
+        <tr class='bottomRow'>
+          <td class='leftCol' id='7'></td>
+          <td class='middleCol' id='8'></td>
+          <td class='rightCol' id='9'></td>
+        </tr>
+      </table>
+
+      <footer>
+        A James Friedman Joint
+      </footer>
+
+      <script src="http://localhost:8080/webpack-dev-server.js"></script>
+      <script src="vendor.bundle.js" type="text/javascript" charset="utf-8"></script>
+      <script src="bundle.js" type="text/javascript" charset="utf-8"></script>
+    </body>
+</html>
