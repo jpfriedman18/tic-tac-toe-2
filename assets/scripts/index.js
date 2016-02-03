@@ -74,6 +74,27 @@ $(document).ready(() => {
       console.error(jqxhr);
     });
   });
+
+  //Log out
+  $('#sign-out-button').on('click', function(e) {
+    e.preventDefault();
+    if (!myApp.user) {
+      console.error('Wrong!');
+      return;
+    }
+    var formData = new FormData(e.target);
+    $.ajax({
+      url: myApp.BASE_URL + '/sign-out/' + myApp.user.id,
+      method: 'DELETE',
+      headers: {
+        Authorization: 'Token token=' + myApp.user.token,
+      },
+    }).done(function() {
+      console.log("Logged Out!");
+    }).fail(function(jqxhr) {
+      console.error(jqxhr);
+    });
+  });
 });
 
 let playGame = function(){
