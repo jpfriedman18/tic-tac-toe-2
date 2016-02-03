@@ -15,6 +15,8 @@ const myApp = {
 
 //AJAX requests
 $(document).ready(() => {
+  $('.signed-out').show();
+  $('.signed-in').hide();
   //Create new user
   $('#sign-up').on('submit', function(e) {
     e.preventDefault();
@@ -46,6 +48,9 @@ $(document).ready(() => {
       console.log(data);
       myApp.user = data.user;
       console.log(myApp.user);
+      $('.signed-out').hide();
+      $('.signed-in').show();
+      ajaxCreateGame();
     }).fail(function(jqxhr) {
       console.error(jqxhr);
     });
@@ -82,7 +87,6 @@ $(document).ready(() => {
       console.error('Wrong!');
       return;
     }
-    var formData = new FormData(e.target);
     $.ajax({
       url: myApp.BASE_URL + '/sign-out/' + myApp.user.id,
       method: 'DELETE',
@@ -91,11 +95,67 @@ $(document).ready(() => {
       },
     }).done(function() {
       console.log("Logged Out!");
+      $('.signed-out').show();
+      $('.signed-in').hide();
     }).fail(function(jqxhr) {
       console.error(jqxhr);
     });
   });
 });
+
+//Create new game instance on server with blank board
+//associated with currently logged-in email
+let ajaxCreateGame = function(){
+  if (!myApp.user) {
+    console.error('Wrong!');
+    return;
+  }
+  $.ajax({
+    url: myApp.BASE_URL + '/games',
+    method: 'POST',
+    headers: {
+      Authorization: 'Token token=' + myApp.user.token,
+    },
+    data: {}
+  })
+  .done(function(data){
+    myApp.game = data.game;
+    console.log(data);
+  })
+  .fail(function(jqxhr) {
+    console.error(jqxhr);
+  });
+};
+
+//
+let ajaxUpdateGame = function(player, index){
+  if (!myApp.user) {
+    console.error('Wrong!');
+    return;
+  }
+  $.ajax({
+    url: myApp.BASE_URL + '/games/' + myApp.game.id,
+    method: 'PATCH',
+    headers: {
+      Authorization: 'Token token=' + myApp.user.token,
+    },
+    data: {
+      "game": {
+        "cell": {
+          "index": index,
+          "value": player
+        }
+//    "over": false
+      }
+    }
+  })
+  .done(function(data){
+    console.log(data);
+  })
+  .fail(function(jqxhr) {
+    console.error(jqxhr);
+  });
+};
 
 let playGame = function(){
   let currentPlayer = 'X';
@@ -178,6 +238,7 @@ let playGame = function(){
     if ($(this).text() === ''){
       $(this).text(currentPlayer);
       boardArray[Number($(this).attr('id')) - 1] = currentPlayer;
+      ajaxUpdateGame(currentPlayer, ($(this).attr('id')) - 1);
       checkWinner(currentPlayer);
       changePlayer();
       $('#currentPlayer').text('Current Player: ' + currentPlayer);
@@ -188,6 +249,7 @@ let playGame = function(){
   //clear board, switch player (loser goes first), reset turn counter
   //reset boardArray with empty strings
   let resetBoard = function(){
+    ajaxCreateGame();
     $('#board').find('td').text('');
     changePlayer();
     turnCounter = 0;

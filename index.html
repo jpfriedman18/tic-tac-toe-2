@@ -112,7 +112,7 @@
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <h4 class="modal-title" id="changepw-label">Are you sure you want to sign out?</h4>
+              <h4 class="modal-title" id="sign-out-label">Are you sure you want to sign out?</h4>
             </div>
             <div class="modal-body">
               <button type="button" class="btn btn-primary" id="sign-out-button" data-dismiss="modal">Yes</button>
@@ -126,7 +126,7 @@
 
       <!--Scoreboard-->
       <div class='container'>
-        <div id='scoreboard'>
+        <div id='scoreboard' class='signed-in'>
           <p id='x-score'>X Wins: 0</p>
           <p id='o-score'>O Wins: 0</p>
           <p id='currentPlayer'>Current Player: X</p>
@@ -135,7 +135,7 @@
 
       <!--Board-->
       <div class='container'>
-        <table id='board'>
+        <table id='board' class='signed-in'>
           <tr class='topRow'>
             <td class='leftCol' id='1'></td>
             <td class='middleCol' id='2'></td>
