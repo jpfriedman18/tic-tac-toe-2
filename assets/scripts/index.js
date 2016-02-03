@@ -13,13 +13,58 @@ const myApp = {
   BASE_URL: 'http://tic-tac-toe.wdibos.com'
 };
 
+//AJAX requests
 $(document).ready(() => {
+  //Create new user
   $('#sign-up').on('submit', function(e) {
     e.preventDefault();
     var formData = new FormData(e.target);
     $.ajax({
       url: myApp.BASE_URL + '/sign-up',
       method: 'POST',
+      contentType: false,
+      processData: false,
+      data: formData,
+    }).done(function(data) {
+      console.log(data);
+    }).fail(function(jqxhr) {
+      console.error(jqxhr);
+    });
+  });
+
+  //Login as existing user
+  $('#sign-in').on('submit', function(e) {
+    e.preventDefault();
+    var formData = new FormData(e.target);
+    $.ajax({
+      url: myApp.BASE_URL + '/sign-in',
+      method: 'POST',
+      contentType: false,
+      processData: false,
+      data: formData,
+    }).done(function(data) {
+      console.log(data);
+      myApp.user = data.user;
+      console.log(myApp.user);
+    }).fail(function(jqxhr) {
+      console.error(jqxhr);
+    });
+  });
+
+  //Change password of currently logged-in user
+  $('#change-password').on('submit', function(e) {
+    e.preventDefault();
+    if (!myApp.user) {
+      console.error('Wrong!');
+      return;
+    }
+    var formData = new FormData(e.target);
+    $.ajax({
+      url: myApp.BASE_URL + '/change-password/' + myApp.user.id,
+      method: 'PATCH',
+      headers: {
+        Authorization: 'Token token=' + myApp.user.token,
+      },
       contentType: false,
       processData: false,
       data: formData,
