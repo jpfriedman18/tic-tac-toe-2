@@ -9,6 +9,28 @@ require('./example');
 // load sass manifest
 require('../styles/index.scss');
 
+const myApp = {
+  BASE_URL: 'http://tic-tac-toe.wdibos.com'
+};
+
+$(document).ready(() => {
+  $('#sign-up').on('submit', function(e) {
+    e.preventDefault();
+    var formData = new FormData(e.target);
+    $.ajax({
+      url: myApp.BASE_URL + '/sign-up',
+      method: 'POST',
+      contentType: false,
+      processData: false,
+      data: formData,
+    }).done(function(data) {
+      console.log(data);
+    }).fail(function(jqxhr) {
+      console.error(jqxhr);
+    });
+  });
+});
+
 let playGame = function(){
   let currentPlayer = 'X';
   let boardArray = ['','','','','','','','',''];

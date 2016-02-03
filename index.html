@@ -2,7 +2,8 @@
 <html>
     <head>
       <title>Tic Tac Toe</title>
-      <link rel='shortcut icon' href='assets/images/favicon.ico' type='image/x-icon'/ >
+      <link rel='shortcut icon' href='assets/images/favicon.ico' type='image/x-icon'/>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <body>
 
@@ -20,42 +21,98 @@
 
          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
            <button type="button" class="btn btn-default navbar-btn signed-out" data-toggle="modal" data-target="#sign-up-modal">Sign Up</button>
-           <button type="button" class="btn btn-default navbar-btn signed-out" data-toggle="modal" data-target="#myModal">Sign In</button>
-           <button type="button" class="btn btn-default navbar-btn signed-in" data-toggle="modal" data-target="#myModal">Change Password</button>
+           <button type="button" class="btn btn-default navbar-btn signed-out" data-toggle="modal" data-target="#sign-in-modal">Sign In</button>
+           <button type="button" class="btn btn-default navbar-btn signed-in" data-toggle="modal" data-target="#change-password-modal">Change Password</button>
            <button type="button" class="btn btn-default navbar-btn signed-in" data-toggle="modal" data-target="#myModal">Sign Out</button>
          </div><!-- /.navbar-collapse -->
        </div><!-- /.container-fluid -->
       </nav>
 
-      <!-- Modal -->
+      <!-- Sign Up Modal -->
       <div class="modal fade" id="sign-up-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+              <h4 class="modal-title" id="signup-label">Sign Up</h4>
             </div>
             <div class="modal-body">
-              <form>
+              <form id='sign-up'>
                 <fieldset class="form-group">
-                  <label for="formGroupExampleInput">Example label</label>
-                  <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Example input">
+                  <label for="credentials[email]">Email</label>
+                  <input name="credentials[email]" type="text" class="form-control" placeholder="Email">
                 </fieldset>
                 <fieldset class="form-group">
-                  <label for="formGroupExampleInput2">Another label</label>
-                  <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="Another input">
+                  <label for="credentials[password]">Password</label>
+                  <input name="credentials[password]" type="password" class="form-control" placeholder="Password">
                 </fieldset>
+                <input type="submit" name="submit" class="btn btn-primary">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
               </form>
             </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sign In Modal -->
+      <div class="modal fade" id="sign-in-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="signin-label">Sign In</h4>
+            </div>
+            <div class="modal-body">
+              <form id='sign-in'>
+                <fieldset class="form-group">
+                  <label for="credentials[email]">Email</label>
+                  <input name="credentials[email]" type="text" class="form-control" placeholder="Email">
+                </fieldset>
+                <fieldset class="form-group">
+                  <label for="credentials[password]">Password</label>
+                  <input name="credentials[password]" type="password" class="form-control" placeholder="Password">
+                </fieldset>
+                <input type="submit" class="btn btn-primary">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Change Password Modal -->
+      <div class="modal fade" id="change-password-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title" id="changepw-label">Change Password</h4>
+            </div>
+            <div class="modal-body">
+              <form id='change-password'>
+                <fieldset class="form-group">
+                  <label for="credentials[email]">Email</label>
+                  <input name="credentials[email]" type="text" class="form-control" placeholder="Email">
+                </fieldset>
+                <fieldset class="form-group">
+                  <label for="password[old]">Old Password</label>
+                  <input name="password[old]" type="password" class="form-control" placeholder="Old Password">
+                </fieldset>
+                <fieldset class="form-group">
+                  <label for="password[new]">New Password</label>
+                  <input name="password[new]" type="password" class="form-control" placeholder="New Password">
+                </fieldset>
+                <input type="submit" class="btn btn-primary">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </form>
             </div>
           </div>
         </div>
       </div>
 
       <h1>Tic-Tac-Toe</h1>
+
+      <!--Scoreboard-->
       <div class='container'>
         <div id='scoreboard'>
           <p id='x-score'>X Wins: 0</p>
@@ -64,6 +121,7 @@
         </div>
       </div>
 
+      <!--Board-->
       <div class='container'>
         <table id='board'>
           <tr class='topRow'>
