@@ -29,6 +29,7 @@ $(document).ready(() => {
       data: formData,
     }).done(function(data) {
       console.log(data);
+      $('#sign-up-modal').modal('hide');
     }).fail(function(jqxhr) {
       console.error(jqxhr);
     });
@@ -50,6 +51,7 @@ $(document).ready(() => {
       console.log(myApp.user);
       $('.signed-out').hide();
       $('.signed-in').show();
+      $('#sign-in-modal').modal('hide');
       ajaxCreateGame();
     }).fail(function(jqxhr) {
       console.error(jqxhr);
@@ -59,10 +61,6 @@ $(document).ready(() => {
   //Change password of currently logged-in user
   $('#change-password').on('submit', function(e) {
     e.preventDefault();
-    if (!myApp.user) {
-      console.error('Wrong!');
-      return;
-    }
     var formData = new FormData(e.target);
     $.ajax({
       url: myApp.BASE_URL + '/change-password/' + myApp.user.id,
@@ -75,6 +73,7 @@ $(document).ready(() => {
       data: formData,
     }).done(function(data) {
       console.log(data);
+      $('#change-password-modal').modal('hide');
     }).fail(function(jqxhr) {
       console.error(jqxhr);
     });
@@ -83,10 +82,6 @@ $(document).ready(() => {
   //Log out
   $('#sign-out-button').on('click', function(e) {
     e.preventDefault();
-    if (!myApp.user) {
-      console.error('Wrong!');
-      return;
-    }
     $.ajax({
       url: myApp.BASE_URL + '/sign-out/' + myApp.user.id,
       method: 'DELETE',
@@ -106,10 +101,6 @@ $(document).ready(() => {
 //Create new game instance on server with blank board
 //associated with currently logged-in email
 let ajaxCreateGame = function(){
-  if (!myApp.user) {
-    console.error('Wrong!');
-    return;
-  }
   $.ajax({
     url: myApp.BASE_URL + '/games',
     method: 'POST',
@@ -120,19 +111,15 @@ let ajaxCreateGame = function(){
   })
   .done(function(data){
     myApp.game = data.game;
-    console.log(data);
+    console.log(myApp.game);
   })
   .fail(function(jqxhr) {
     console.error(jqxhr);
   });
 };
 
-//
+//Updates back-end game instance with new move
 let ajaxUpdateGame = function(player, index){
-  if (!myApp.user) {
-    console.error('Wrong!');
-    return;
-  }
   $.ajax({
     url: myApp.BASE_URL + '/games/' + myApp.game.id,
     method: 'PATCH',
@@ -150,7 +137,28 @@ let ajaxUpdateGame = function(player, index){
     }
   })
   .done(function(data){
-    console.log(data);
+    //console.log(data);
+    myApp.game = data.game;
+    //console.log(myApp.game);
+  })
+  .fail(function(jqxhr) {
+    console.error(jqxhr);
+  });
+};
+
+//Retrieves current game state from back-end
+let ajaxGetGame = function(){
+  $.ajax({
+    url: myApp.BASE_URL + '/games/' + myApp.game.id,
+    method: 'GET',
+    headers: {
+      Authorization: 'Token token=' + myApp.user.token,
+    }
+  })
+  .done(function(data){
+    //console.log(data);
+    myApp.game = data.game;
+    console.log(myApp.game);
   })
   .fail(function(jqxhr) {
     console.error(jqxhr);
@@ -239,6 +247,7 @@ let playGame = function(){
       $(this).text(currentPlayer);
       boardArray[Number($(this).attr('id')) - 1] = currentPlayer;
       ajaxUpdateGame(currentPlayer, ($(this).attr('id')) - 1);
+      ajaxGetGame();
       checkWinner(currentPlayer);
       changePlayer();
       $('#currentPlayer').text('Current Player: ' + currentPlayer);
