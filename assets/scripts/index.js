@@ -136,10 +136,8 @@ let ajaxUpdateGame = function(player, index){
       }
     }
   })
-  .done(function(data){
-    //console.log(data);
-    myApp.game = data.game;
-    //console.log(myApp.game);
+  .done(function(){
+    ajaxGetGame();
   })
   .fail(function(jqxhr) {
     console.error(jqxhr);
@@ -156,7 +154,6 @@ let ajaxGetGame = function(){
     }
   })
   .done(function(data){
-    //console.log(data);
     myApp.game = data.game;
     console.log(myApp.game);
   })
@@ -247,7 +244,6 @@ let playGame = function(){
       $(this).text(currentPlayer);
       boardArray[Number($(this).attr('id')) - 1] = currentPlayer;
       ajaxUpdateGame(currentPlayer, ($(this).attr('id')) - 1);
-      ajaxGetGame();
       checkWinner(currentPlayer);
       changePlayer();
       $('#currentPlayer').text('Current Player: ' + currentPlayer);
