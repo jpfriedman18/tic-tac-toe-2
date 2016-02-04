@@ -112,6 +112,7 @@ let ajaxCreateGame = function(){
   .done(function(data){
     myApp.game = data.game;
     console.log(myApp.game);
+    ajaxGetGame();
   })
   .fail(function(jqxhr) {
     console.error(jqxhr);
@@ -156,6 +157,7 @@ let ajaxGetGame = function(){
   .done(function(data){
     myApp.game = data.game;
     console.log(myApp.game);
+    console.log(myApp.game.cells);
   })
   .fail(function(jqxhr) {
     console.error(jqxhr);
@@ -164,7 +166,6 @@ let ajaxGetGame = function(){
 
 let playGame = function(){
   let currentPlayer = 'X';
-  let boardArray = ['','','','','','','','',''];
   let turnCounter = 0;
   let xWins = 0;
   let oWins = 0;
@@ -242,7 +243,6 @@ let playGame = function(){
   $('#board').find('td').on('click', function(){
     if ($(this).text() === ''){
       $(this).text(currentPlayer);
-      boardArray[Number($(this).attr('id')) - 1] = currentPlayer;
       ajaxUpdateGame(currentPlayer, ($(this).attr('id')) - 1);
       checkWinner(currentPlayer);
       changePlayer();
@@ -251,15 +251,18 @@ let playGame = function(){
     }
   });
 
+  let renderBoard = function(gameArray){
+    gameArray.forEach(function(element, index){
+      
+    });
+  };
+
   //clear board, switch player (loser goes first), reset turn counter
-  //reset boardArray with empty strings
   let resetBoard = function(){
     ajaxCreateGame();
     $('#board').find('td').text('');
     changePlayer();
     turnCounter = 0;
-    console.log(boardArray);
-    boardArray = ['','','','','','','','',''];
   };
 
   let updateScoreboard = function(player){
@@ -277,8 +280,3 @@ let playGame = function(){
 $(document).ready(() => {
   playGame();
 });
-
-/*$(".btn-primary").click(function(){
-  console.log($("#formGroupExampleInput").val());
-  $("#formGroupExampleInput").val('');
-});*/
