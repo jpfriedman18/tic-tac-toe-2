@@ -1,8 +1,5 @@
 'use strict';
 
-// user require with a reference to bundle the file and use it in this file
-// var example = require('./example');
-
 // use require without a reference to ensure a file is bundled
 require('./example');
 
@@ -105,7 +102,6 @@ const myApp = {
       myApp.game = data.game;
       renderBoard(myApp.game.cells);
       console.log(myApp.game);
-      console.log(myApp.game.cells);
       checkWinner(currentPlayer);
       changePlayer();
       $('#currentPlayer').text('Current Player: ' + currentPlayer);
@@ -181,14 +177,16 @@ const myApp = {
         data: formData,
       }).done(function(data) {
         console.log(data);
+        signIn(e);
         $('#sign-up-modal').modal('hide');
       }).fail(function(jqxhr) {
         console.error(jqxhr);
       });
     });
 
-    //Login as existing user
-    $('#sign-in').on('submit', function(e) {
+    //Makes Sign In AJAX request
+    //called by clicking sign-in button OR successfully signing up
+    let signIn = function(e){
       e.preventDefault();
       var formData = new FormData(e.target);
       $.ajax({
@@ -208,6 +206,12 @@ const myApp = {
       }).fail(function(jqxhr) {
         console.error(jqxhr);
       });
+    };
+
+    //Login as existing user
+    $('#sign-in').on('submit', function(e) {
+      e.preventDefault();
+      signIn(e);
     });
 
     //Change password of currently logged-in user
