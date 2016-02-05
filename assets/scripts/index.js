@@ -42,9 +42,32 @@ const myApp = {
   };
 
   let checkWinner = function(player){
+    let arr = myApp.game.cells;
+    let isFilled = function(element){
+      return element !== '';
+    };
+
+    if ((arr[0] === player && arr[1] === player && arr[2] === player)
+      || (arr[3] === player && arr[4] === player && arr[5] === player)
+      || (arr[6] === player && arr[7] === player && arr[8] === player)
+      || (arr[0] === player && arr[3] === player && arr[6] === player)
+      || (arr[1] === player && arr[4] === player && arr[7] === player)
+      || (arr[2] === player && arr[5] === player && arr[8] === player)
+      || (arr[0] === player && arr[4] === player && arr[8] === player)
+      || (arr[2] === player && arr[4] === player && arr[6] === player)){
+        createWinAlert(player);
+        updateScoreboard(player);
+        changePlayer();
+        resetBoard();
+      }
+      else if (arr.every(isFilled)){
+        createWinAlert('Nobody');
+        changePlayer();
+        resetBoard();
+      }
     //top row
-    if ($('#1').text() === player && $('#2').text() === player && $('#3').text() === player){
-      alert(player + ' is the winner!');
+    /*if ($('#1').text() === player && $('#2').text() === player && $('#3').text() === player){
+      createWinAlert(player);
       updateScoreboard(player);
       changePlayer();
       resetBoard();
@@ -100,16 +123,23 @@ const myApp = {
     }
     //Check for a draw
     if (turnCounter === 9){
-      alert('It\'s a draw!');
+      createWinAlert('Nobody');
       changePlayer();
       resetBoard();
-    }
+    }*/
+  };
+
+  let createWinAlert = function(player){
+    $('#alert-template').append('<div class="alert alert-info" id="alert-template" role="alert">'+player+' Wins!</div>');
+    $('#alert-template').show();
+    setTimeout(function() {
+        $("#alert-template").hide();
+    }, 2500);
   };
 
   //play an individual turn
   $('#board').find('td').on('click', function(){
     if ($(this).text() === ''){
-      //$(this).text(currentPlayer);
       ajaxUpdateGame(currentPlayer, ($(this).attr('id')) - 1);
     }
   });
@@ -198,6 +228,7 @@ const myApp = {
 
   //Account AJAX requests
   $(document).ready(() => {
+    $('.alert').hide();
     $('.signed-out').show();
     $('.signed-in').hide();
     //Create new user
