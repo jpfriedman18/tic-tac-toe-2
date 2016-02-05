@@ -1,168 +1,60 @@
 [![General Assembly Logo](https://camo.githubusercontent.com/1a91b05b8f4d44b5bbfb83abac2b0996d8e26c92/687474703a2f2f692e696d6775722e636f6d2f6b6538555354712e706e67)](https://generalassemb.ly/education/web-development-immersive)
 
-# CSS: Layout with Bootstrap
+# Overview
 
-## Prequisites
+The purpose of this app to to allow a user to play the class time-passing game
+Tic-Tac-Toe in their browser. In order to play the game, the user must create
+and log in with an account, the details of which are stored on a back-end
+server. Each move by a player is also sent to the server and stored on the
+back-end, and the board in the browser is rendered from a representation of the
+board retrieved from the server. Wins are tracked on a scoreboard at the bottom
+of the page.
 
--   [ga-wdi-boston/html-css-layout](https://github.com/ga-wdi-boston/html-css-layout)
--   [ga-wdi-boston/html-css-sass](https://github.com/ga-wdi-boston/html-css-sass)
--   [ga-wdi-boston/js-template-installation](https://github.com/ga-wdi-boston/js-template-installation)
+## Gameplay
 
-## Objectives
+When starting the first game of the session, the first player to make a move
+is 'X'. Players then alternate between 'X' and 'O' until either one player wins,
+or there is a draw. The player whose turn it currently is will be displayed in
+the scoreboard at the bottom of the page. Upon the completion of a game, the
+winner is declared in an alert, the scoreboard changes to reflect the winner
+(or stays the same in the event of a draw), and the board is cleared. At the
+start of a new game, the loser of the previous game will go first, or in the
+event of a draw, the opposite player of whomever went last in the previous game
+will go first. This continues until the user logs out of their account, at which
+point the board will be hidden again until another user logs in.
 
-By the end of this lesson, students should be able to:
+##Technologies Used
 
--   Install `bootstrap-sass` into a front-end project.
--   Create mobile-first, responsive site layouts using
-    [bootstrap](http://getbootstrap.com).
--   Maintain semantic HTML markup using Sass mixins provided by
-    `bootstrap-sass`.
--   Reference bootstrap documentation.
--   Add a modal to a front end project.
+The front-end of the app is built with HTML and styled using the Bootstrap sass
+framework. The game logic is built using JavaScript, which interacts with the
+interface using jQuery. The JavaScript also uses AJAX to interact with the
+back-end server, using FormData to send sign up, sign in, sign out, and
+change password requests, and JSON to send game data requests to create new
+instances of a game on the back-end, update the game-state, and retrieve
+the game-state. The visual representation of the board is then rendered
+using data from the back-end using jQuery.
 
-## Preparation
+## User Stories
 
-1.  [Fork and clone](https://github.com/ga-wdi-boston/meta/wiki/ForkAndClone)
-    this repository.
-1.  Install dependencies with `npm install`.
+Upon opening the page, users will be able to either create an account by
+clicking the "Sign Up" or log into an existing account with the "Sign In"
+button, each of which will open modals with the appropriate fields. After
+signing in, the "Sign Up" and "Sign In" buttons will be hidden, and replaced
+by "Change Password" and "Sign Out" buttons. The user will be able to change
+their password by clicking the "Change Password" button and entering their old
+and new passwords.
 
-## Twitter Bootstrap
-
-Bootstrap is a free and open-source collection of tools for creating websites
-and web applications. It contains HTML- and CSS-based design templates for
-typography, forms, buttons, navigation and other interface components, as
-well as optional JavaScript extensions. It aims to ease the development of
-dynamic websites and web applications.
-
-Bootstrap is a front end framework, that is, an interface for the user, unlike
-the server-side code which resides on the "back end" or server.
-
-Bootstrap is the most-starred project on GitHub, with over 90K stars and more
-than 38K forks.
-
-[Bootstrap Wiki](https://en.wikipedia.org/wiki/Bootstrap_(front-end_framework))
-
-## Install Bootstrap
-
-We'll use `bootstrap-sass`, the official Sass port of bootstrap. The next major
-version of bootstrap will use Sass by default. For now, using Sass allows us to
-keep our markup clean.
-
-If you're starting a new project, first get a copy of
-[js-template](https://github.com/ga-wdi-boston/js-template). If you're unsure
-how to install the template, see the [installation
-instructions](https://github.com/ga-wdi-boston/js-template-installation).
-
-After you have the initial template files, follow these steps to install
-`bootstrap-sass` into your project. For this talk, we've already installed the
-template files, so you can just follow along.
-
--   [ ] `npm install --save-dev bootstrap-sass` to download bootstrap and add it
-    as a dependency.
--   [ ] Add `bootstrap-sass` JS modules as a vendor script inside
-    [`grunt/webpack.js`](grunt/webpack.js).
-
-    ```diff
-    -       vendor: ['jquery'],
-    +       vendor: ['jquery', 'bootstrap-sass'],
-    ```
-
--   [ ] Register the font path and include the `bootstrap-sass` module in your
-    style manifest.
-
-    ```diff
-    + $icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
-    + @import '~bootstrap-sass/assets/stylesheets/bootstrap';
-    ```
-
--   [ ] Remove `normalize.css` from [`package.json`](package.json) and
-    [`index.js`](index.js) since bootstrap already includes its own browser
-    reset.
-
-## Lab: Review Sites Made With Bootstrap
-
-In squads closely inspect the following site list.  Keeping these questions in
-mind please write down your thoughts and we will discuss them as a class.
-
-1.  How are the the pages similar?
-1.  How is the HTML similar among the pages?
-1.  As you interact with the site how does the DOM change (if at all)?
-1.  How are elements on the pages horizontally arranged?
-1.  Notice any similarities among bootstrap pages in general?
-
--   [Divinity in Tech](http://divinityintech.com/)
--   [UI Viking](http://uiviking.com/)
--   [MintVine](https://mintvine.com/)
--   [The Tool Smith](http://thetoolsmith.com/)
--   [Fansoro](http://fansoro.org/)
--   [Pave](http://pavingtheway.net/)
-
-## Bootstrap Documentation
-
-For components and jQuery plugins always reference the Bootstrap docs.
-
- [Bootstrap Documentation](http://getbootstrap.com/)
-
-## Lab: 12-Column Grid
-
-After we properly install Bootstrap, lets get some firsthand experience writing
-it.  Using the documentation we discussed earlier write a simple grid in the
-`index.html` file located in this repo.  Make use of col-xs, sm, md, lg and xl.
-Try making an evenly spaced 3x3 grid.
-
--   Place your column divs within a row div.
--   Place your row divs within a container div
--   Experiment with various viewport sizes
-
-## Lab: Modals and More
-
-Follow along as I addd a bootstrap modal to our current sandbox page.
-
-On your own:
-
--   Referencing the Bootstrap documentation add an input-group or well to your
-    modal.
--   Using your knowledge of jQuery write a function so that when "save changes"
-    is clicked the input in the well or input group is console logged in Chrome.
--   Refrencing the Bootstrap documentation add a navbar to your page.
--   Move the button that opens up the modal to the navbar.
-
-## Demo: Using 1bootstrap-sass1 for Semantic Markup
-
-Follow along as I use mixins to make our grid system more semantic.
-
-```html
-<div class="container">
-  <div class="row article">
-    <div class="col-md-8">.col-md-8</div>
-    <div class="col-md-4">.col-md-4</div>
-  </div>
-</div>
-
-
-<div class="container">
-  <div class="article">
-    <div class="main-content">.col-md-8</div>
-    <div class="right-sidebar">.col-md-4</div>
-  </div>
-</div>
-```
-
-## Lab: Semantic Markup
-
-1.  Using the code I used above in your `index.scss` file refactor on your own.
-1.  Write your own mobile ready page using Bootstrap classes.
-1.  Refactor your HTML to be more semantic (copy/paste your previous code and
-    refactor it using bootstrap-sass to make it semantic).
-
-## Useful Resources
-
--   [Sitepoint Sass Mixins](http://www.sitepoint.com/5-useful-sass-mixins-bootstrap/)
--   [Bootstrap Grid Tricks](http://willschenk.com/bootstrap-advanced-grid-tricks/)
--   [Hongkait Grid Tricks](http://www.hongkiat.com/blog/bootstrap-and-sass/)
--   [Bootstrap Documentation](http://getbootstrap.com/)
-
-## [License](LICENSE)
-
-Source code distributed under the MIT license. Text and other assets copyright
-General Assembly, Inc., all rights reserved.
+Users will also be able see an empty tic-tac-toe board after signing in.
+Users can then begin playing by clicking on one of the squares. By clicking one
+of the squares, the user will be able to mark the square with either X or O
+(depending on whose turn it is, which is displayed on the scoreboard at the
+bottom of the page). After marking a square with a letter, the user will then
+be able to mark a different square with the opposite letter, and continue to
+alternate until one player wins or there is a draw (all squares are filled with
+no winner). The user will then see an alert telling them the outcome of the
+game, and then see a new cleared board. If one player wins, that player's score
+will be incremented by 1, and the user will be able to see the current score on
+the scoreboard. When finished, the user will be able to click the "Sign Out"
+button, which will log their account out of the back-end, hide the board, and
+the user will again see the "Sign Up" and "Sign In" buttons on the navbar at
+the top of the page.
