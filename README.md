@@ -58,3 +58,7 @@ the scoreboard. When finished, the user will be able to click the "Sign Out"
 button, which will log their account out of the back-end, hide the board, and
 the user will again see the "Sign Up" and "Sign In" buttons on the navbar at
 the top of the page.
+
+##Wireframe
+
+See initial wireframe [here](https://drive.google.com/file/d/0B7bwsjwFCuRgLTBNSm5MWExpd1hrbDlBdmpLUWtDQ1IwWVNr/view?usp=sharing)
