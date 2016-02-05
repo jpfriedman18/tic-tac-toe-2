@@ -82,68 +82,6 @@ webpackJsonp([0],[
 	    changePlayer();
 	    resetBoard();
 	  }
-	  //top row
-	  /*if ($('#1').text() === player && $('#2').text() === player && $('#3').text() === player){
-	    createWinAlert(player);
-	    updateScoreboard(player);
-	    changePlayer();
-	    resetBoard();
-	  }
-	  //middle row
-	  if ($('#4').text() === player && $('#5').text() === player && $('#6').text() === player){
-	    alert(player + ' is the winner!');
-	    updateScoreboard(player);
-	    changePlayer();
-	    resetBoard();
-	  }
-	  //bottom row
-	  if ($('#7').text() === player && $('#8').text() === player && $('#9').text() === player){
-	    alert(player + ' is the winner!');
-	    updateScoreboard(player);
-	    changePlayer();
-	    resetBoard();
-	  }
-	  //left column
-	  if ($('#1').text() === player && $('#4').text() === player && $('#7').text() === player){
-	    alert(player + ' is the winner!');
-	    updateScoreboard(player);
-	    changePlayer();
-	    resetBoard();
-	  }
-	  //middle column
-	  if ($('#2').text() === player && $('#5').text() === player && $('#8').text() === player){
-	    alert(player + ' is the winner!');
-	    updateScoreboard(player);
-	    changePlayer();
-	    resetBoard();
-	  }
-	  //right column
-	  if ($('#3').text() === player && $('#6').text() === player && $('#9').text() === player){
-	    alert(player + ' is the winner!');
-	    updateScoreboard(player);
-	    changePlayer();
-	    resetBoard();
-	  }
-	  //left diagonal
-	  if ($('#1').text() === player && $('#5').text() === player && $('#9').text() === player){
-	    alert(player + ' is the winner!');
-	    updateScoreboard(player);
-	    changePlayer();
-	    resetBoard();
-	  }
-	  //right diagonal
-	  if ($('#3').text() === player && $('#5').text() === player && $('#7').text() === player){
-	    alert(player + ' is the winner!');
-	    updateScoreboard(player);
-	    changePlayer();
-	    resetBoard();
-	  }
-	  //Check for a draw
-	  if (turnCounter === 9){
-	    createWinAlert('Nobody');
-	    changePlayer();
-	    resetBoard();
-	  }*/
 	};
 
 	var createWinAlert = function createWinAlert(player) {
