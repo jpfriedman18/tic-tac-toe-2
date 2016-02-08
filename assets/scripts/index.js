@@ -21,10 +21,12 @@ const myApp = {
 
   //clear board, switch player (loser goes first), reset turn counter
   let resetBoard = function(){
-    ajaxCreateGame();
-    $('#board').find('td').text('');
-    changePlayer();
-    turnCounter = 0;
+    setTimeout(function() {
+      ajaxCreateGame();
+      $('#board').find('td').text('');
+      changePlayer();
+      turnCounter = 0;
+    }, 500);
   };
 
   let updateScoreboard = function(player){
