@@ -25,9 +25,6 @@ webpackJsonp([0],[
 
 	/* WEBPACK VAR INJECTION */(function($) {'use strict';
 
-	// user require with a reference to bundle the file and use it in this file
-	// var example = require('./example');
-
 	// use require without a reference to ensure a file is bundled
 
 	__webpack_require__(3);
@@ -50,10 +47,12 @@ webpackJsonp([0],[
 
 	//clear board, switch player (loser goes first), reset turn counter
 	var resetBoard = function resetBoard() {
-	  ajaxCreateGame();
-	  $('#board').find('td').text('');
-	  changePlayer();
-	  turnCounter = 0;
+	  setTimeout(function () {
+	    ajaxCreateGame();
+	    $('#board').find('td').text('');
+	    changePlayer();
+	    turnCounter = 0;
+	  }, 500);
 	};
 
 	var updateScoreboard = function updateScoreboard(player) {
@@ -120,7 +119,6 @@ webpackJsonp([0],[
 	    myApp.game = data.game;
 	    renderBoard(myApp.game.cells);
 	    console.log(myApp.game);
-	    console.log(myApp.game.cells);
 	    checkWinner(currentPlayer);
 	    changePlayer();
 	    $('#currentPlayer').text('Current Player: ' + currentPlayer);
@@ -191,14 +189,16 @@ webpackJsonp([0],[
 	      data: formData
 	    }).done(function (data) {
 	      console.log(data);
+	      signIn(e);
 	      $('#sign-up-modal').modal('hide');
 	    }).fail(function (jqxhr) {
 	      console.error(jqxhr);
 	    });
 	  });
 
-	  //Login as existing user
-	  $('#sign-in').on('submit', function (e) {
+	  //Makes Sign In AJAX request
+	  //called by clicking sign-in button OR successfully signing up
+	  var signIn = function signIn(e) {
 	    e.preventDefault();
 	    var formData = new FormData(e.target);
 	    $.ajax({
@@ -218,6 +218,12 @@ webpackJsonp([0],[
 	    }).fail(function (jqxhr) {
 	      console.error(jqxhr);
 	    });
+	  };
+
+	  //Login as existing user
+	  $('#sign-in').on('submit', function (e) {
+	    e.preventDefault();
+	    signIn(e);
 	  });
 
 	  //Change password of currently logged-in user
